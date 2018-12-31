@@ -1,5 +1,9 @@
 package leakyIntegrateFireNeuron;
-
+/**
+ * This class simulates a dendrite.
+ * @author Levi Dworkin
+ *
+ */
 public class Pipe {
 	private int weight, spikeCounter, train;
 	private boolean event;

@@ -3,7 +3,12 @@ package leakyIntegrateFireNeuron;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+/**
+ * This class is a bucket with pipes and a leak simulating a neuron with dendrites. 
+ * This model is designed for 2 pipes only.
+ * @author Levi Dworkin
+ *
+ */
 public class Bucket {
 	private double capacity;
 	private double currentSize;
@@ -12,7 +17,14 @@ public class Bucket {
 	private ArrayList<Pipe> pipes;
 	private long startingTime;
 	private BucketThread thread;
-	
+	/**
+	 * Class Constructor
+	 * @param capacity: threshold
+	 * @param leak: Lets out a little bit of water at each time interval
+	 * @param gamma: Spike size
+	 * @param numOfPipes: Number of pipes attached to the bucket
+	 * @param weights: Array of weights for each pipe according to importance
+	 */
 	public Bucket(double capacity, double leak, double gamma, int numOfPipes, int[] weights) {
 		super();
 		currentSize = 0;
@@ -29,7 +41,7 @@ public class Bucket {
 		thread = new BucketThread(this);
 	}
 	/**
-	 * Starts the clock
+	 * Starts the clock and runs a BucketThread which is constant running time of the bucket.
 	 */
 	public void startTime() {
 		startingTime = System.nanoTime()/1000000;
@@ -39,7 +51,7 @@ public class Bucket {
 	}
 	/**
 	 * updates the current amount of water in the bucket, and outputs a spike if
-	 * the amount inside passed the threshold
+	 * the amount inside passes the threshold
 	 */
 	public void checkStats() {
 		currentSize = sum() - leak*Pipe.dt; //sum() calculates by the spike counter, hence 
@@ -56,6 +68,11 @@ public class Bucket {
 			currentSize=0;
 		}
 	}
+	/**
+	 * Sums up the amount of spikes from each pipe according to its weight and spike size.
+	 * (In this model the spike size is gamma uniformly)
+	 * @returns double
+	 */
 	private double sum() {
 		double sum = 0;
 		for (Pipe pipe : pipes) {
