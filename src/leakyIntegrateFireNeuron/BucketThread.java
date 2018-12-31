@@ -16,6 +16,7 @@ public class BucketThread extends Thread {
 	 * Generates spikes by each pipe at random. There'a a 20% chance for each pipe to spike.
 	 * If pipe1 spikes it will then produce a spike train of 5 consecutive spikes over 5 time intervals.
 	 * The same goes for pipe2 but only 3 consecutive spikes.
+	 * If both pipes spikes at the same time interval the program will output a coincidence.
 	 */
 	public void run(){
 
