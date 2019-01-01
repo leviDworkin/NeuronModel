@@ -6,7 +6,7 @@ package leakyIntegrateFireNeuron;
  */
 public class Pipe {
 	private int weight, spikeCounter, train;
-	private boolean event;
+	private boolean event, spiking;
 	static int dt;
 	private int pNum;
 	
@@ -16,6 +16,7 @@ public class Pipe {
 		event = false;
 		pNum = 0;
 		train=0;
+		spiking = false;
 	}
 		
 	public int getTrain() {
@@ -34,7 +35,20 @@ public class Pipe {
 		this.pNum = pNum;
 	}
 
+	public boolean isSpiking() {
+		return spiking;
+	}
+
+	public void setSpiking(boolean spiking) {
+		this.spiking = spiking;
+	}
+
 	public boolean isEvent() {
+		if(pNum==0 && train==6 || pNum==1 && train==4) {
+			event = true;
+		}else {
+			event = false;
+		}
 		return event;
 	}
 

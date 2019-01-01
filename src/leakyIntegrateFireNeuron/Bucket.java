@@ -1,8 +1,6 @@
 package leakyIntegrateFireNeuron;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Iterator;
 /**
  * This class is a bucket with pipes and a leak simulating a neuron with dendrites. 
  * This model is designed for 2 pipes only.
@@ -60,12 +58,16 @@ public class Bucket {
 			System.out.println("Spike at "+System.nanoTime()/1000000);
 			currentSize = 0;
 			Pipe.dt=0;
+			System.out.println(currentSizeBucket());
 			for (Pipe pipe : pipes) {
 				pipe.setSpikeCounter(0);
 			}   
 		}
-		if (currentSize<0) {
+		else if (currentSize<0) {
 			currentSize=0;
+			System.out.println(toString());
+		}else {
+			System.out.println(toString());
 		}
 	}
 	/**
@@ -77,10 +79,11 @@ public class Bucket {
 		double sum = 0;
 		for (Pipe pipe : pipes) {
 			sum = sum + pipe.getWeight()*gamma*pipe.getSpikeCounter(); 
-			pipe.setEvent(false);
+			pipe.setSpiking(false);
 		}
 		return sum;
 	}
+	
 	
 	public double getCapacity() {
 		return capacity;
@@ -118,7 +121,10 @@ public class Bucket {
 	public void setStartingTime(long startingTime) {
 		this.startingTime = startingTime;
 	}
-
+	public String currentSizeBucket() {
+		return "Bucket [capacity=" + (int)capacity + ", currentSize=" + currentSize
+				+ ", dt=" + Pipe.dt + "]";
+	}
 	@Override
 	public String toString() {
 		String s = "["+"pipe1="+pipes.get(0).getTrain()+", pipe2="+pipes.get(1).getTrain()+"]";

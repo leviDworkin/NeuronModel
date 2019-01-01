@@ -26,7 +26,7 @@ public class BucketThread extends Thread {
 					double rand = Math.random();
 					if (rand>.8) {
 						pipe.setSpikeCounter(pipe.getSpikeCounter()+1);
-						pipe.setEvent(true);
+						pipe.setSpiking(true);
 						pipe.setTrain(pipe.getTrain()+1);
 					}
 				}else {
@@ -45,13 +45,13 @@ public class BucketThread extends Thread {
 			boolean e2 = b.getPipes().get(1).isEvent();
 			//checks coincidence between two events e1 and e2, where e1 is a spike from pipe1,
 			//and e2 from pipe2
+		
+			b.checkStats();
+			
 			if(e1 && e2) {
 				System.out.println("\nCoincidence between two dendrites at time interval dt="+Pipe.dt);
 				System.out.println("Current time = "+(System.nanoTime()/1000000) );
 			}
-		
-			b.checkStats();
-			System.out.println(b.toString());
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
